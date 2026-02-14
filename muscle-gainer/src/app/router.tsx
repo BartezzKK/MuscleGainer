@@ -1,12 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-
+import { ProtectedRoute } from "../shared/components/ProtectedRoute";
+import Login  from "../features/auth/Login";
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <div>Home</div>,
+        element: (
+            <ProtectedRoute>
+            <div>Dashboarid</div>
+            </ProtectedRoute >
+        ),
     },
     {
         path: "/login",
-        element: <div>Login</div>,
+        element: <Login />,
     },
 ]);
