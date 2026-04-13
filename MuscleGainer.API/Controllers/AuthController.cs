@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
+﻿using Domain.Auth.DTO;
+using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using MuscleGainer.API.Services;
 
 namespace MuscleGainer.API.Controllers
 {
@@ -9,25 +8,44 @@ namespace MuscleGainer.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly AuthService authService;
         private readonly JwtService jwtService;
 
-        public AuthController(JwtService jwtService)
+        public AuthController(AuthService authService, JwtService jwtService)
         {
+            this.authService = authService;
             this.jwtService = jwtService;
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
+
+
             if(request.Email == "test@test.test" && request.Password == "1qaz")
             {
-                var token = jwtService.GenerateToken(request.Email);
-                return Ok(new {token});
+                var accessToken = jwtService.GenerateToken(request.Email);
+                return Ok(new
+                {
+                    accessToken = accessToken,
+                    user = new
+                    {
+                        id=1,
+                        email = "test@test.test"
+                    }
+                });
             }
             return Unauthorized();
 
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            return Ok(authService.RegisterAsync(request));
+        }
     }
+
 
     public class LoginRequest
     {

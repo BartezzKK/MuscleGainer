@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from './AuthContext';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [email, setEmail ] = useState('');
     const [password, setPassword] = useState('');
-
-    const { login, user } = useAuth();
-    if (user) {
-        return <Navigate to='/' replace/>}
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,8 +13,10 @@ const Login = () => {
         try {
             console.log("Logowanie z danymi:", { email });
             await login(email, password);
+            console.log('login 1');
+            navigate('/');
         } catch (error) {
-            alert("B≥πd logowania");
+            alert("b≈Çad logowania");
         }
     };
 

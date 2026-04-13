@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGainer.API", "MuscleG
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{DD8B45BA-C134-4B96-9B28-0757558092B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{776EE3C0-9FAD-45B3-90B9-C86BAA992169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{2505B7C4-0B23-46E3-BB32-78612D06ABB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2505B7C4-0B23-46E3-BB32-78612D06ABB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2505B7C4-0B23-46E3-BB32-78612D06ABB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD8B45BA-C134-4B96-9B28-0757558092B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD8B45BA-C134-4B96-9B28-0757558092B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD8B45BA-C134-4B96-9B28-0757558092B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD8B45BA-C134-4B96-9B28-0757558092B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{776EE3C0-9FAD-45B3-90B9-C86BAA992169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{776EE3C0-9FAD-45B3-90B9-C86BAA992169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{776EE3C0-9FAD-45B3-90B9-C86BAA992169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{776EE3C0-9FAD-45B3-90B9-C86BAA992169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

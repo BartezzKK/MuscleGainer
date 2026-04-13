@@ -6,7 +6,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: (
             <ProtectedRoute>
-            <div>Dashboarid</div>
+            <div>Dashboard</div>
             </ProtectedRoute >
         ),
     },
