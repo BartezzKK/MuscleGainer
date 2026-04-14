@@ -1,5 +1,5 @@
-﻿using Domain.Auth.DTO;
-using Domain.Services;
+﻿using Domain.Auth;
+using Domain.Auth.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MuscleGainer.API.Controllers
@@ -8,48 +8,39 @@ namespace MuscleGainer.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService authService;
-        private readonly JwtService jwtService;
+        private readonly IAuthService _authService;
 
-        public AuthController(AuthService authService, JwtService jwtService)
+        public AuthController(IAuthService authService)
         {
-            this.authService = authService;
-            this.jwtService = jwtService;
+            _authService = authService;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-
-
-            if(request.Email == "test@test.test" && request.Password == "1qaz")
+            try
             {
-                var accessToken = jwtService.GenerateToken(request.Email);
-                return Ok(new
-                {
-                    accessToken = accessToken,
-                    user = new
-                    {
-                        id=1,
-                        email = "test@test.test"
-                    }
-                });
+                var response = await _authService.LoginAsync(request);
+                return Ok(response);
             }
-            return Unauthorized();
-
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            return Ok(authService.RegisterAsync(request));
+            try
+            {
+                var response = await _authService.RegisterAsync(request);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-    }
-
-
-    public class LoginRequest
-    {
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
     }
 }

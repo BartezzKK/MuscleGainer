@@ -1,11 +1,9 @@
 using Domain.Auth;
-using Domain.Services;
 using Infrastructure;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
-using MuscleGainer.API.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +23,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowedFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://localhost:5173")
+            policy.WithOrigins("http://localhost:5173")
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
