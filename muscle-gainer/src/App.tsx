@@ -1,5 +1,5 @@
 import './App.css'
-import { useAuth } from './features/auth/AuthContext';
+import { useAuth } from './features/auth/context/AuthContext';
 
 function App() {
   const {isLoading} = useAuth();
