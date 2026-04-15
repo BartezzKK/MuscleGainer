@@ -34,7 +34,7 @@ namespace Infrastructure.Services
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            var token = _jwtService.GenerateToken(user.Email);
+            var token = _jwtService.GenerateToken(user.Id, user.Email);
             return new AuthResponse
             {
                 Token = token,
@@ -59,7 +59,7 @@ namespace Infrastructure.Services
                 throw new Exception("Invalid email or password.");
             }
 
-            var token = _jwtService.GenerateToken(user.Email);
+            var token = _jwtService.GenerateToken(user.Id, user.Email);
             return new AuthResponse
             {
                 Token = token,
