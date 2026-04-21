@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260418220138_AddWeeklyTrainingPlans")]
+    partial class AddWeeklyTrainingPlans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,36 +76,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ExerciseId");
 
                     b.ToTable("ExerciseSets");
-                });
-
-            modelBuilder.Entity("Domain.Entities.GlobalExercise", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("Difficulty")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Equipment")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExerciseType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MuscleGroup")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GlobalExercises");
                 });
 
             modelBuilder.Entity("Domain.Entities.LogEntry", b =>
@@ -202,18 +175,6 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DefaultSets")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Difficulty")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Equipment")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExerciseType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MuscleGroup")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -328,15 +289,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("PlanDayId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanDayId");
 
                     b.HasIndex("UserId");
 
@@ -449,17 +405,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Workout", b =>
                 {
-                    b.HasOne("Domain.Entities.PlanDay", "PlanDay")
-                        .WithMany()
-                        .HasForeignKey("PlanDayId");
-
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PlanDay");
 
                     b.Navigation("User");
                 });

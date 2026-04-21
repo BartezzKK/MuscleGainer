@@ -7,7 +7,7 @@ namespace Domain.Auth.DTO
 {
     public class AuthResponse
     {
-        public string Token { get; set; } = string.Empty;
+        public string AccessToken { get; set; } = string.Empty;
         public UserDTO User { get; set; } = null!;
     }
 }

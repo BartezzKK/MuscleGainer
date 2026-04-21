@@ -1,0 +1,76 @@
+[
+  { "name": "Wyciskanie sztangi na ławce poziomej", "muscleGroup": 0, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Wyciskanie sztangi na ławce skośnej", "muscleGroup": 0, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Wyciskanie hantli na ławce poziomej", "muscleGroup": 0, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+  { "name": "Rozpiętki hantlami", "muscleGroup": 0, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+  { "name": "Pompki", "muscleGroup": 0, "exerciseType": 4, "equipment": 0, "difficulty": 0 },
+  { "name": "Pompki na poręczach (klatka)", "muscleGroup": 0, "exerciseType": 4, "equipment": 6, "difficulty": 1 },
+  { "name": "Crossover na bramce", "muscleGroup": 0, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+
+  { "name": "Martwy ciąg", "muscleGroup": 1, "exerciseType": 0, "equipment": 1, "difficulty": 2 },
+  { "name": "Wiosłowanie sztangą", "muscleGroup": 1, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Wiosłowanie hantlem jednorącz", "muscleGroup": 1, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+  { "name": "Podciąganie na drążku", "muscleGroup": 1, "exerciseType": 4, "equipment": 6, "difficulty": 2 },
+  { "name": "Ściąganie drążka wyciągu (lat pulldown)", "muscleGroup": 1, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Wiosłowanie na maszynie", "muscleGroup": 1, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+
+  { "name": "Wyciskanie sztangi nad głowę (OHP)", "muscleGroup": 2, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Wyciskanie hantli nad głowę", "muscleGroup": 2, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+  { "name": "Unoszenie hantli bokiem", "muscleGroup": 2, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+  { "name": "Unoszenie hantli przodem", "muscleGroup": 2, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+  { "name": "Wznosy ramion tyłem (tylny akton)", "muscleGroup": 2, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+  { "name": "Arnold press", "muscleGroup": 2, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+
+  { "name": "Uginanie ramion ze sztangą", "muscleGroup": 3, "exerciseType": 0, "equipment": 1, "difficulty": 0 },
+  { "name": "Uginanie ramion z hantlami", "muscleGroup": 3, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+  { "name": "Uginanie ramion młotkowe", "muscleGroup": 3, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+  { "name": "Uginanie na wyciągu dolnym", "muscleGroup": 3, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+
+  { "name": "Wyciskanie francuskie", "muscleGroup": 4, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Prostowanie ramion na wyciągu", "muscleGroup": 4, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Pompki na poręczach (triceps)", "muscleGroup": 4, "exerciseType": 4, "equipment": 6, "difficulty": 1 },
+  { "name": "Wyciskanie wąskim chwytem", "muscleGroup": 4, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Kickback hantlem", "muscleGroup": 4, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+
+  { "name": "Brzuszki", "muscleGroup": 5, "exerciseType": 4, "equipment": 0, "difficulty": 0 },
+  { "name": "Plank", "muscleGroup": 5, "exerciseType": 2, "equipment": 0, "difficulty": 0 },
+  { "name": "Deska boczna", "muscleGroup": 5, "exerciseType": 2, "equipment": 0, "difficulty": 0 },
+  { "name": "Unoszenie nóg w zwisie", "muscleGroup": 5, "exerciseType": 4, "equipment": 6, "difficulty": 1 },
+  { "name": "Rollout (roller do brzucha)", "muscleGroup": 5, "exerciseType": 2, "equipment": 0, "difficulty": 2 },
+  { "name": "Russian twist", "muscleGroup": 5, "exerciseType": 2, "equipment": 0, "difficulty": 1 },
+  { "name": "Bicycle crunch", "muscleGroup": 5, "exerciseType": 4, "equipment": 0, "difficulty": 0 },
+
+  { "name": "Przysiad ze sztangą (back squat)", "muscleGroup": 6, "exerciseType": 0, "equipment": 1, "difficulty": 2 },
+  { "name": "Przysiad frontalny", "muscleGroup": 6, "exerciseType": 0, "equipment": 1, "difficulty": 2 },
+  { "name": "Wypychanie nóg na suwnicy", "muscleGroup": 6, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Wykroki z hantlami", "muscleGroup": 6, "exerciseType": 0, "equipment": 2, "difficulty": 1 },
+  { "name": "Hack squat", "muscleGroup": 6, "exerciseType": 0, "equipment": 3, "difficulty": 1 },
+  { "name": "Goblet squat", "muscleGroup": 6, "exerciseType": 0, "equipment": 4, "difficulty": 0 },
+
+  { "name": "Uginanie nóg w leżeniu (hamstring curl)", "muscleGroup": 7, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Rumuński martwy ciąg", "muscleGroup": 7, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Martwy ciąg na prostych nogach", "muscleGroup": 7, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Nordic hamstring curl", "muscleGroup": 7, "exerciseType": 4, "equipment": 0, "difficulty": 2 },
+
+  { "name": "Hip thrust ze sztangą", "muscleGroup": 8, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+  { "name": "Glute kickback na maszynie", "muscleGroup": 8, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Mostek biodrowy", "muscleGroup": 8, "exerciseType": 2, "equipment": 0, "difficulty": 0 },
+  { "name": "Odwodzenie nóg na maszynie", "muscleGroup": 8, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+
+  { "name": "Wspięcia na palce stojąc (maszyna)", "muscleGroup": 9, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Wspięcia na palce siedząc", "muscleGroup": 9, "exerciseType": 0, "equipment": 3, "difficulty": 0 },
+  { "name": "Wspięcia na palce z hantlami", "muscleGroup": 9, "exerciseType": 0, "equipment": 2, "difficulty": 0 },
+
+  { "name": "Hyperextensions", "muscleGroup": 10, "exerciseType": 0, "equipment": 0, "difficulty": 0 },
+  { "name": "Martwy ciąg sumo", "muscleGroup": 10, "exerciseType": 0, "equipment": 1, "difficulty": 2 },
+  { "name": "Good morning", "muscleGroup": 10, "exerciseType": 0, "equipment": 1, "difficulty": 1 },
+
+  { "name": "Uginanie nadgarstków ze sztangą", "muscleGroup": 11, "exerciseType": 0, "equipment": 1, "difficulty": 0 },
+  { "name": "Farmer's walk", "muscleGroup": 11, "exerciseType": 2, "equipment": 2, "difficulty": 0 },
+
+  { "name": "Bieg na bieżni", "muscleGroup": 12, "exerciseType": 1, "equipment": 3, "difficulty": 0 },
+  { "name": "Burpees", "muscleGroup": 12, "exerciseType": 2, "equipment": 0, "difficulty": 1 },
+  { "name": "Skakanka", "muscleGroup": 12, "exerciseType": 1, "equipment": 0, "difficulty": 0 },
+  { "name": "Kettlebell swing", "muscleGroup": 12, "exerciseType": 2, "equipment": 4, "difficulty": 1 },
+  { "name": "Turkish get-up", "muscleGroup": 12, "exerciseType": 2, "equipment": 4, "difficulty": 2 }
+]

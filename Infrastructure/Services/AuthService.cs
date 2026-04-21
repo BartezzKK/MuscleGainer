@@ -37,7 +37,7 @@ namespace Infrastructure.Services
             var token = _jwtService.GenerateToken(user.Id, user.Email);
             return new AuthResponse
             {
-                Token = token,
+                AccessToken = token,
                 User = new UserDTO
                 {
                     Id = user.Id,
@@ -62,7 +62,7 @@ namespace Infrastructure.Services
             var token = _jwtService.GenerateToken(user.Id, user.Email);
             return new AuthResponse
             {
-                Token = token,
+                AccessToken = token,
                 User = new UserDTO
                 {
                     Id = user.Id,

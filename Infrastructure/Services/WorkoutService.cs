@@ -32,6 +32,8 @@ namespace Infrastructure.Services
                 .Where(w => w.Id == id && w.UserId == userId)
                 .Include(w => w.Exercises.OrderBy(e => e.Order))
                     .ThenInclude(e => e.Sets.OrderBy(s => s.Order))
+                .Include(w => w.PlanDay)
+                    .ThenInclude(pd => pd!.TrainingPlan)
                 .FirstOrDefaultAsync();
 
             return workout is null ? null : MapToDTO(workout);
@@ -48,6 +50,43 @@ namespace Infrastructure.Services
 
             _context.Workouts.Add(workout);
             await _context.SaveChangesAsync();
+
+            return MapToDTO(workout);
+        }
+
+        public async Task<WorkoutDTO> CreateWorkoutFromPlanDay(int userId, int planDayId)
+        {
+            var planDay = await _context.PlanDays
+                .Include(pd => pd.TrainingPlan)
+                .Include(pd => pd.Exercises)
+                    .ThenInclude(pde => pde.PlanExercise)
+                .FirstOrDefaultAsync(pd => pd.Id == planDayId && pd.TrainingPlan.UserId == userId);
+
+            if (planDay is null)
+                throw new Exception("Plan day not found.");
+
+            var dayName = planDay.DayOfWeek.ToString();
+            var workout = new Workout
+            {
+                UserId = userId,
+                Name = planDay.TrainingPlan.Name,
+                Date = DateTime.UtcNow.Date,
+                PlanDayId = planDayId,
+                Exercises = planDay.Exercises
+                    .OrderBy(e => e.Id)
+                    .Select((pde, idx) => new Exercise
+                    {
+                        Name = pde.PlanExercise.Name,
+                        Order = idx + 1
+                    }).ToList()
+            };
+
+            _context.Workouts.Add(workout);
+            await _context.SaveChangesAsync();
+
+            await _context.Entry(workout).Reference(w => w.PlanDay).LoadAsync();
+            if (workout.PlanDay != null)
+                await _context.Entry(workout.PlanDay).Reference(pd => pd.TrainingPlan).LoadAsync();
 
             return MapToDTO(workout);
         }
@@ -123,7 +162,9 @@ namespace Infrastructure.Services
                 Exercises = workout.Exercises
                     .OrderBy(e => e.Order)
                     .Select(MapExerciseToDTO)
-                    .ToList()
+                    .ToList(),
+                PlanDayId = workout.PlanDayId,
+                PlanName = workout.PlanDay?.TrainingPlan?.Name
             };
         }
 
