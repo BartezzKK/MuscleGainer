@@ -36,4 +36,9 @@ export const workoutService = {
     deleteWorkout: async (id: number): Promise<void> => {
         await api.delete(`/workouts/${id}`);
     },
+
+    createFromPlanDay: async (planDayId: number): Promise<WorkoutDTO> => {
+        const response = await api.post<WorkoutDTO>(`/workouts/from-plan-day/${planDayId}`);
+        return response.data;
+    },
 };

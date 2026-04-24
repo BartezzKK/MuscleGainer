@@ -18,6 +18,8 @@ export interface WorkoutDTO {
     date: string;
     createdAt: string;
     exercises: ExerciseDTO[];
+    planDayId?: number | null;
+    planName?: string | null;
 }
 
 export interface CreateWorkoutRequest {
