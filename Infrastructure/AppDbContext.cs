@@ -22,6 +22,7 @@ namespace Infrastructure
         public DbSet<PlanDayExercise> PlanDayExercises => Set<PlanDayExercise>();
         public DbSet<WeeklyLog> WeeklyLogs => Set<WeeklyLog>();
         public DbSet<LogEntry> LogEntries => Set<LogEntry>();
+        public DbSet<BodyWeightLog> BodyWeightLogs => Set<BodyWeightLog>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -132,6 +133,20 @@ namespace Infrastructure
                       .WithMany(de => de.LogEntries)
                       .HasForeignKey(e => e.PlanDayExerciseId)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<BodyWeightLog>(entity =>
+            {
+                entity.HasKey(b => b.Id);
+                entity.Property(b => b.WeightKg).HasColumnType("decimal(6,2)");
+                entity.HasOne(b => b.User)
+                      .WithMany()
+                      .HasForeignKey(b => b.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(b => b.Workout)
+                      .WithMany()
+                      .HasForeignKey(b => b.WorkoutId)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

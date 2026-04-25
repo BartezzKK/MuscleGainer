@@ -36,7 +36,35 @@ namespace Infrastructure.Services
                     .ThenInclude(pd => pd!.TrainingPlan)
                 .FirstOrDefaultAsync();
 
-            return workout is null ? null : MapToDTO(workout);
+            if (workout is null) return null;
+
+            var dto = MapToDTO(workout);
+
+            var exerciseNames = dto.Exercises.Select(e => e.Name).Distinct().ToList();
+            foreach (var exerciseName in exerciseNames)
+            {
+                var previousExercise = await _context.Exercises
+                    .Where(e =>
+                        e.Name == exerciseName &&
+                        e.Workout.UserId == userId &&
+                        e.Workout.Id != id)
+                    .Include(e => e.Sets)
+                    .OrderByDescending(e => e.Workout.Date)
+                    .ThenByDescending(e => e.Workout.Id)
+                    .FirstOrDefaultAsync();
+
+                if (previousExercise is null) continue;
+
+                var previousSets = previousExercise.Sets
+                    .OrderBy(s => s.Order)
+                    .Select(s => new ExerciseSetDTO { Id = s.Id, Reps = s.Reps, Weight = s.Weight, Order = s.Order })
+                    .ToList();
+
+                foreach (var exDto in dto.Exercises.Where(e => e.Name == exerciseName))
+                    exDto.PreviousSets = previousSets;
+            }
+
+            return dto;
         }
 
         public async Task<WorkoutDTO> CreateWorkout(int userId, CreateWorkoutRequest request)

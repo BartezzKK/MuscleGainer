@@ -8,5 +8,6 @@ namespace Domain.Workouts.DTO
         public string Name { get; set; } = string.Empty;
         public int Order { get; set; }
         public List<ExerciseSetDTO> Sets { get; set; } = new();
+        public List<ExerciseSetDTO> PreviousSets { get; set; } = new();
     }
 }

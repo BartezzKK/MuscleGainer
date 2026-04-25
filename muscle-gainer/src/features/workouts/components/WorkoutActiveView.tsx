@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { WorkoutDTO, ExerciseDTO } from '../types';
 import AddSetForm from './AddSetForm';
 import AddExerciseForm from './AddExerciseForm';
+import { bodyWeightService } from '../../bodyWeight/services/bodyWeightService';
 
 // ─── Stopwatch ────────────────────────────────────────────────────────────────
 const Stopwatch = () => {
@@ -95,6 +96,39 @@ const ExerciseSlide = ({ exercise, index, total, onSetAdded }: ExerciseSlideProp
                 <h2 className="text-2xl font-bold text-white mt-1">{exercise.name}</h2>
             </div>
 
+            {/* Previous week reference */}
+            {exercise.previousSets && exercise.previousSets.length > 0 && (
+                <div className="border border-[#2a2a45] bg-[#0f0f1e] rounded-xl p-4">
+                    <p className="text-xs font-semibold text-[#6366f1] uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <span>📅</span> Poprzedni trening
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        {exercise.previousSets.map((s) => (
+                            <div
+                                key={s.id}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1a1a30] 
+                                           border border-[#2a2a45] text-sm"
+                            >
+                                <span className="w-5 h-5 inline-flex items-center justify-center rounded-full 
+                                                 bg-indigo-800/40 text-indigo-400 text-xs font-bold">
+                                    {s.order}
+                                </span>
+                                <span className="text-white font-semibold">{s.reps}</span>
+                                <span className="text-[#94a3b8] text-xs">pow</span>
+                                <span className="text-[#3a3a5c]">×</span>
+                                <span className="text-white font-semibold">{s.weight}</span>
+                                <span className="text-[#94a3b8] text-xs">kg</span>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-xs text-[#94a3b8] mt-2">
+                        Łączna objętość: <span className="text-indigo-300 font-semibold">
+                            {exercise.previousSets.reduce((sum, s) => sum + s.reps * s.weight, 0).toFixed(1)} kg
+                        </span>
+                    </p>
+                </div>
+            )}
+
             {/* Sets table */}
             {exercise.sets.length > 0 ? (
                 <div className="border border-[#3a3a5c] rounded-xl overflow-hidden">
@@ -180,12 +214,35 @@ const WorkoutActiveView = ({ workout, onExerciseAdded, onSetAdded }: WorkoutActi
     const [currentIndex, setCurrentIndex] = useState(0);
     const [showAddExercise, setShowAddExercise] = useState(false);
     const [finished, setFinished] = useState(false);
+    const [bodyWeight, setBodyWeight] = useState('');
+    const [savingWeight, setSavingWeight] = useState(false);
 
     const exercises = workout.exercises;
     const safeIndex = Math.min(currentIndex, Math.max(exercises.length - 1, 0));
     const isLastExercise = safeIndex === exercises.length - 1;
 
     const goTo = (idx: number) => setCurrentIndex(Math.max(0, Math.min(idx, exercises.length - 1)));
+
+    const handleFinish = async () => {
+        if (bodyWeight.trim()) {
+            const kg = parseFloat(bodyWeight);
+            if (!isNaN(kg) && kg > 0) {
+                setSavingWeight(true);
+                try {
+                    await bodyWeightService.logWeight({
+                        weightKg: kg,
+                        date: new Date().toISOString(),
+                        workoutId: workout.id,
+                    });
+                } catch {
+                    // non-blocking — weight logging failure shouldn't block navigation
+                } finally {
+                    setSavingWeight(false);
+                }
+            }
+        }
+        navigate('/workouts');
+    };
 
     const formattedDate = new Date(workout.date).toLocaleDateString('pl-PL', {
         weekday: 'long',
@@ -278,16 +335,40 @@ const WorkoutActiveView = ({ workout, onExerciseAdded, onSetAdded }: WorkoutActi
                                     <div className="text-4xl mb-3">🏆</div>
                                     <h2 className="text-xl font-bold text-white">Trening zakończony!</h2>
                                     <p className="text-[#94a3b8] text-sm mt-2">
-                                        Świetna robota! Czy chcesz zakończyć i wrócić do listy treningów?
+                                        Świetna robota! Możesz opcjonalnie zapisać swoją masę ciała z dzisiaj.
                                     </p>
                                 </div>
+
+                                {/* Optional body weight */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-xs font-semibold text-[#94a3b8] uppercase tracking-wider">
+                                        Masa ciała (opcjonalnie)
+                                    </label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="number"
+                                            min="20"
+                                            max="300"
+                                            step="0.1"
+                                            placeholder="np. 75.5"
+                                            value={bodyWeight}
+                                            onChange={(e) => setBodyWeight(e.target.value)}
+                                            className="flex-1 px-4 py-2.5 rounded-lg bg-[#1e1e30] border border-[#3a3a5c] 
+                                                       text-white placeholder-[#4a4a6a] text-sm focus:outline-none 
+                                                       focus:border-indigo-500 transition-colors"
+                                        />
+                                        <span className="text-[#94a3b8] text-sm font-medium">kg</span>
+                                    </div>
+                                </div>
+
                                 <div className="flex flex-col gap-2">
                                     <button
-                                        onClick={() => navigate('/workouts')}
+                                        onClick={handleFinish}
+                                        disabled={savingWeight}
                                         className="w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white 
-                                                   font-semibold text-sm transition-colors cursor-pointer"
+                                                   font-semibold text-sm transition-colors cursor-pointer disabled:opacity-50"
                                     >
-                                        ✓ Tak, zakończ trening
+                                        {savingWeight ? 'Zapisywanie...' : '✓ Zakończ trening'}
                                     </button>
                                     <button
                                         onClick={() => setFinished(false)}

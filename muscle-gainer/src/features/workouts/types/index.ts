@@ -10,6 +10,7 @@ export interface ExerciseDTO {
     name: string;
     order: number;
     sets: ExerciseSetDTO[];
+    previousSets: ExerciseSetDTO[];
 }
 
 export interface WorkoutDTO {
