@@ -84,6 +84,4 @@ app.UseCors("AllowedFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-/
-
 app.Run();

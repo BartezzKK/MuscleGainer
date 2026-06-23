@@ -82,7 +82,7 @@ namespace Infrastructure.Services
             return MapToDTO(workout);
         }
 
-        public async Task<WorkoutDTO> CreateWorkoutFromPlanDay(int userId, int planDayId)
+        public async Task<WorkoutDTO> CreateWorkoutFromPlanDay(int userId, int planDayId, DateTime? date = null)
         {
             var planDay = await _context.PlanDays
                 .Include(pd => pd.TrainingPlan)
@@ -98,7 +98,7 @@ namespace Infrastructure.Services
             {
                 UserId = userId,
                 Name = planDay.TrainingPlan.Name,
-                Date = DateTime.UtcNow.Date,
+                Date = date?.Date ?? DateTime.UtcNow.Date,
                 PlanDayId = planDayId,
                 Exercises = planDay.Exercises
                     .OrderBy(e => e.Id)

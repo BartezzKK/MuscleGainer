@@ -99,10 +99,10 @@ const WeeklyLogView = ({ log, onChanged }: WeeklyLogViewProps) => {
     const [startingDay, setStartingDay] = useState<number | null>(null);
     const todayDow = new Date().getDay();
 
-    const handleStartWorkout = async (planDayId: number) => {
+    const handleStartWorkout = async (planDayId: number, date?: string) => {
         setStartingDay(planDayId);
         try {
-            const workout = await workoutService.createFromPlanDay(planDayId);
+            const workout = await workoutService.createFromPlanDay(planDayId, date);
             navigate(`/workouts/${workout.id}`);
         } catch {
             setStartingDay(null);
@@ -150,15 +150,29 @@ const WeeklyLogView = ({ log, onChanged }: WeeklyLogViewProps) => {
                             </div>
                             <div className="flex items-center gap-3">
                                 <span className="text-xs text-[#94a3b8]">{dayCompleted}/{day.entries.length} serii</span>
-                                {dow === todayDow && (
+                                {dow <= todayDow && (
                                     <button
-                                        onClick={() => handleStartWorkout(day.planDayId)}
+                                        onClick={() => {
+                                            const weekStart = new Date(log.weekStartDate);
+                                            const dayDate = new Date(weekStart);
+                                            const weekStartDow = weekStart.getDay();
+                                            const diff = dow >= weekStartDow ? dow - weekStartDow : 7 - weekStartDow + dow;
+                                            dayDate.setDate(weekStart.getDate() + diff);
+                                            const dateStr = dow === todayDow ? undefined : dayDate.toISOString();
+                                            handleStartWorkout(day.planDayId, dateStr);
+                                        }}
                                         disabled={startingDay === day.planDayId}
-                                        className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 
-                                                   text-white font-semibold transition-colors cursor-pointer 
-                                                   disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className={`text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer 
+                                                   disabled:opacity-50 disabled:cursor-not-allowed
+                                                   ${dow === todayDow 
+                                                       ? 'bg-indigo-600 hover:bg-indigo-700 text-white' 
+                                                       : 'bg-amber-600 hover:bg-amber-700 text-white'}`}
                                     >
-                                        {startingDay === day.planDayId ? 'Tworzenie...' : '▶ Rozpocznij trening'}
+                                        {startingDay === day.planDayId 
+                                            ? 'Tworzenie...' 
+                                            : dow === todayDow 
+                                                ? '▶ Rozpocznij trening' 
+                                                : '▶ Nadrób trening'}
                                     </button>
                                 )}
                             </div>

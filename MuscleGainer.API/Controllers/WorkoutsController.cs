@@ -60,12 +60,12 @@ namespace MuscleGainer.API.Controllers
         }
 
         [HttpPost("from-plan-day/{planDayId}")]
-        public async Task<IActionResult> CreateFromPlanDay(int planDayId)
+        public async Task<IActionResult> CreateFromPlanDay(int planDayId, [FromQuery] DateTime? date = null)
         {
             try
             {
                 var userId = GetUserId();
-                var workout = await _workoutService.CreateWorkoutFromPlanDay(userId, planDayId);
+                var workout = await _workoutService.CreateWorkoutFromPlanDay(userId, planDayId, date);
                 return CreatedAtAction(nameof(GetWorkout), new { id = workout.Id }, workout);
             }
             catch (Exception ex)
