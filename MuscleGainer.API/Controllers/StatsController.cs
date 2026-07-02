@@ -25,6 +25,14 @@ namespace MuscleGainer.API.Controllers
             return Ok(dashboard);
         }
 
+        [HttpGet("exercises")]
+        public async Task<IActionResult> GetExerciseNames()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var names = await _statsService.GetExerciseNames(userId);
+            return Ok(names);
+        }
+
         [HttpGet("progress/{exerciseName}")]
         public async Task<IActionResult> GetExerciseProgress(string exerciseName)
         {

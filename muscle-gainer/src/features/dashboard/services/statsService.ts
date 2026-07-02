@@ -7,6 +7,11 @@ export const statsService = {
     return response.data;
   },
 
+  getExerciseNames: async (): Promise<string[]> => {
+    const response = await api.get<string[]>("/stats/exercises");
+    return response.data;
+  },
+
   getExerciseProgress: async (name: string): Promise<ExerciseProgressDTO> => {
     const response = await api.get<ExerciseProgressDTO>(
       `/stats/progress/${encodeURIComponent(name)}`

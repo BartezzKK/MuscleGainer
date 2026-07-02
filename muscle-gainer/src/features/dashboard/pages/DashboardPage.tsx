@@ -6,25 +6,25 @@ import RecentWorkouts from '../components/RecentWorkouts';
 import ProgressChart from '../components/ProgressChart';
 import WeeklyPlanWidget from '../components/WeeklyPlanWidget';
 import WorkoutCalendar from '../components/WorkoutCalendar';
+import BodyWeightChart from '../components/BodyWeightChart';
 
 const DashboardPage = () => {
     const [dashboard, setDashboard] = useState<DashboardDTO | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [selectedExercise, setSelectedExercise] = useState('');
-    const [exerciseInput, setExerciseInput] = useState('');
+    const [exerciseNames, setExerciseNames] = useState<string[]>([]);
 
     useEffect(() => {
         statsService.getDashboard()
             .then(setDashboard)
             .catch(() => setError('Błąd podczas pobierania danych.'))
             .finally(() => setLoading(false));
-    }, []);
 
-    const handleExerciseSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        setSelectedExercise(exerciseInput.trim());
-    };
+        statsService.getExerciseNames()
+            .then(setExerciseNames)
+            .catch(() => {});
+    }, []);
 
     if (loading) {
         return (
@@ -53,6 +53,8 @@ const DashboardPage = () => {
             {/* Karty statystyk */}
             <StatsOverview stats={dashboard} />
 
+            <BodyWeightChart />
+
             {/* Główny layout: kalendarz (lewo) + treść (prawo) */}
             <div className="flex flex-col lg:flex-row gap-6 items-start">
 
@@ -72,26 +74,21 @@ const DashboardPage = () => {
 
                     {/* Progres ćwiczenia */}
                     <div className="flex flex-col gap-4">
-                        <form onSubmit={handleExerciseSearch} className="flex gap-3 items-end">
-                            <div className="flex flex-col gap-1.5 flex-1 max-w-xs">
-                                <label className="text-sm font-semibold text-[#94a3b8]">
-                                    Sprawdź progres ćwiczenia
-                                </label>
-                                <input
-                                    type="text"
-                                    value={exerciseInput}
-                                    onChange={(e) => setExerciseInput(e.target.value)}
-                                    placeholder="np. Wyciskanie sztangi"
-                                    className="px-4 py-2.5 rounded-lg bg-[#252540] border border-[#3a3a5c] text-white placeholder-[#94a3b8] focus:outline-none focus:border-indigo-500 transition-colors text-sm"
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-colors cursor-pointer"
+                        <div className="flex flex-col gap-1.5 max-w-xs">
+                            <label className="text-sm font-semibold text-[#94a3b8]">
+                                Sprawdź progres ćwiczenia
+                            </label>
+                            <select
+                                value={selectedExercise}
+                                onChange={(e) => setSelectedExercise(e.target.value)}
+                                className="px-4 py-2.5 rounded-lg bg-[#252540] border border-[#3a3a5c] text-white focus:outline-none focus:border-indigo-500 transition-colors text-sm cursor-pointer"
                             >
-                                Pokaż
-                            </button>
-                        </form>
+                                <option value="">-- Wybierz ćwiczenie --</option>
+                                {exerciseNames.map((name) => (
+                                    <option key={name} value={name}>{name}</option>
+                                ))}
+                            </select>
+                        </div>
 
                         {selectedExercise && <ProgressChart exerciseName={selectedExercise} />}
                     </div>

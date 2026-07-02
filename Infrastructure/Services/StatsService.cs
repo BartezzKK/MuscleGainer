@@ -75,6 +75,16 @@ namespace Infrastructure.Services
             };
         }
 
+        public async Task<List<string>> GetExerciseNames(int userId)
+        {
+            return await _context.Exercises
+                .Where(e => e.Workout.UserId == userId)
+                .Select(e => e.Name)
+                .Distinct()
+                .OrderBy(n => n)
+                .ToListAsync();
+        }
+
         public async Task<ExerciseProgressDTO> GetExerciseProgress(int userId, string exerciseName)
         {
             var exercises = await _context.Exercises

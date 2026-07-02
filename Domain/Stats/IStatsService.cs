@@ -6,5 +6,6 @@ namespace Domain.Stats
     {
         Task<DashboardDTO> GetDashboard(int userId);
         Task<ExerciseProgressDTO> GetExerciseProgress(int userId, string exerciseName);
+        Task<List<string>> GetExerciseNames(int userId);
     }
 }
